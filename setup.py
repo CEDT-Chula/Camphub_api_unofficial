@@ -11,7 +11,7 @@ setup(
     description="""unofficial api to get information from camphub and other camp/competition news website. in thai""",
     long_description_content_type='text/markdown',
     long_description=long_description,
-    version='0.2',
+    version='0.3',
     license='MIT',
     author="HRNPH",
     author_email='hirunkul2548@gmail.com',
