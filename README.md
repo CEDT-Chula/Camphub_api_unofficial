@@ -9,7 +9,7 @@ I don't have intention to make it a scraper for commercial purpose I just want t
 
 # Installation
 ```python
-from camp_parser import camphub_parser # or any thing taht we support
+from camp_parser import camphub_parser # or any thing that we support
 camp = camphub_parser('https://www.camphub.in.th/computer/') #page url
 print(camp.info) #get the information
 ```
