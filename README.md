@@ -8,9 +8,6 @@ I don't have intention to make it a scraper for commercial purpose I just want t
 <strong>user of this project should only use it for personal use and not for commercial purpose</strong>
 
 # Installation
-```bash
-pip install camp-parser
-```
 ```python
 from camp_parser import camphub_parser # or any thing thatREADME.rst we support
 camp = camphub_parser('https://www.camphub.in.th/computer/') #page url
