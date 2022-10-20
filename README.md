@@ -7,6 +7,9 @@ I don't have intention to make it a scraper for commercial purpose I just want t
 
 <strong>user of this project should only use it for personal use and not for commercial purpose</strong>
 
+## Supported Site
+- https://www.camphub.in.th/
+
 # Installation
 ```bash
 pip install camp-parser
