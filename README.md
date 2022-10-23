@@ -1,5 +1,6 @@
 # Usage
-get an information about the camp and compettion currently available 
+
+get an information about the camp and compettion currently available
 
 aims to be used mainly on thailand event and compettion centered aroud tech and computer
 
@@ -8,18 +9,38 @@ I don't have intention to make it a scraper for commercial purpose I just want t
 <strong>user of this project should only use it for personal use and not for commercial purpose</strong>
 
 ## Supported Site
+
 - https://www.camphub.in.th/
 
 # Installation
+
 ```bash
 pip install camp_parser
 ```
+
+# Usage
+
+## Get CampInfro
+
 ```python
 from camp_parser import camphub_parser # or any thing thatREADME.rst we support
 camp = camphub_parser('https://www.camphub.in.th/computer/') #page url
 print(camp.info) #get the information
 ```
+
+## Fetch many pages at once
+
+```python
+from camp_parser import camphub_parser # or any thing
+if __name__ == '__main__':
+    camp = camphub_parser('https://www.camphub.in.th/computer/') #page url
+
+    print(camp.page_fetching('https://www.camphub.in.th/computer/', pages = 50))
+    print(camp.page_fetching('https://www.camphub.in.th/computer/', pages = 50, workers = -1)) # Enable Multiprocessing
+```
+
 ## Information structure
+
 ```python
 {
     'title': 'title of the camp',
