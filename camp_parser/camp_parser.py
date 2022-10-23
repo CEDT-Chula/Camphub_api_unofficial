@@ -80,9 +80,9 @@ class camphub_parser:
         return dataf
     
     # fetch many pages at once
-    def fetch_n_pages_from(self, source, pages):
+    def page_fetching(self, source, pages):
         dataframe = self.camp2df(self.camps.all_camp_info(source))
         for i in tqdm(range(2, pages + 2)):
-            dataframe.append = self.camp2df(self.camps.all_camp_info(f'{source}/page/{i}/'))
+            dataframe = dataframe.append(self.camp2df(self.camps.all_camp_info(f'{source}/page/{i}/')), ignore_index=True)
             
         return dataframe.reset_index(drop=True)
