@@ -26,7 +26,7 @@ print(camp.info) #get the information
     'organize_date': 'start date of the camp',
     'register_deadline': 'last day yu can register to the camp',
     'max_paticipants': '(string not number Ex. ไม่จำกัด, 200ค คน)',
-    'cost': 'cost of the camp Ex. ฟรี, 1000 บาท',
+    'costs': 'cost of the camp Ex. ฟรี, 1000 บาท',
     'paticipants_requirements': 'what you need to join the camp',
     'organizer': 'who organize the camp',
     'full_description': 'full description of the camp',
