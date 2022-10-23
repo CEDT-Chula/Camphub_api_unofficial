@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import bs4 as bs
 import re
+from multiprocessing import Pool
 
 class camphub_parser:
 
@@ -65,11 +66,23 @@ class camphub_parser:
         for x in info:
             dataf = dataf.append(x, ignore_index=True)
         return dataf
+
+    def all_info(self, data):
+        source, i = data
+        return self.all_camp_info(f'{source}/page/{i}/')
     
     # fetch many pages at once
-    def page_fetching(self, source, pages):
-        dataframe = self.camp2df(self.camps.all_camp_info(source))
-        for i in tqdm(range(2, pages + 2)):
-            dataframe = dataframe.append(self.camp2df(self.camps.all_camp_info(f'{source}/page/{i}/')), ignore_index=True)
+    def page_fetching(self, source, pages, workers = 1):
+        dataframe = self.camp2df(self.all_camp_info(source))
+        if workers != 1:
+            index = [(source, i) for i in range(2, pages + 2)]
+            with Pool(workers) as p:
+                result = list(tqdm(p.imap(self.all_info, index), total = pages))
             
+            for value in result:
+                dataframe = dataframe.append(value, ignore_index=True)
+        else:
+            for i in tqdm(range(2, pages + 2)):
+                dataframe = dataframe.append(self.camp2df(self.all_camp_info(f'{source}/page/{i}/')), ignore_index=True)
+        
         return dataframe.reset_index(drop=True)
