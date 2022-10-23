@@ -1,3 +1,5 @@
+from tqdm import tqdm
+import pandas as pd
 import requests
 import bs4 as bs
 import re
@@ -60,3 +62,27 @@ class camphub_parser:
         for article in articles:
             camp_info_list.append(self.camp_info(article))
         return camp_info_list
+
+    #  Turn camp into dataframe
+    def camp2df(self, info):
+        dataf = pd.DataFrame(columns=['title', 'link', 'small_description', 'type', 'organize_date', 'register_deadline', 'max_paticipants', 'costs', 'paticipants_requirements', 'organizer', 'full_description'])
+        dataf['title'] = [x['title'] for x in info]
+        dataf['link'] = [x['link'] for x in info]
+        dataf['small_description'] = [x['small_description'] for x in info]
+        dataf['type'] = [x['type'] for x in info]
+        dataf['organize_date'] = [x['organize_date'] for x in info]
+        dataf['register_deadline'] = [x['register_deadline'] for x in info]
+        dataf['max_paticipants'] = [x['max_paticipants'] for x in info]
+        dataf['costs'] = [x['costs'] for x in info]
+        dataf['paticipants_requirements'] = [x['paticipants_requirements'] for x in info]
+        dataf['organizer'] = [x['organizer'] for x in info]
+        dataf['full_description'] = [x['full_description'] for x in info]
+        return dataf
+    
+    # fetch many pages at once
+    def fetch_n_pages_from(self, source, pages):
+        dataframe = self.camp2df(self.camps.all_camp_info(source))
+        for i in tqdm(range(2, pages + 2)):
+            dataframe.append = self.camp2df(self.camps.all_camp_info(f'{source}/page/{i}/'))
+            
+        return dataframe.reset_index(drop=True)
