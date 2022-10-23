@@ -38,9 +38,7 @@ class camphub_parser:
             full_description = [description_stripper(x.text) for x in inside_pages.find('div', {'class':'entry-content'}).find_all('p')]
             full_description = ' '.join(full_description)
 
-            info = []
-            for i in inside_pages.find_all('h4'):
-                info.append(i.get_text(separator=" ").strip())
+            info = [i.get_text(separator=" ").strip() for i in inside_pages.find_all('h4')]
             mapping = {'type':info[0], 'organize_date':info[1], 'register_deadline':info[2], 'max_paticipants':info[3], 'costs':info[4], 'paticipants_requirements':info[5], 'organizer':info[6], 'full_description':full_description}
             return mapping
         
@@ -58,25 +56,14 @@ class camphub_parser:
         if source is None:
             source = self.source
         articles = self.all_camp_article(source)
-        camp_info_list = []
-        for article in articles:
-            camp_info_list.append(self.camp_info(article))
+        camp_info_list = [self.camp_info(article) for article in articles]
         return camp_info_list
 
     #  Turn camp into dataframe
     def camp2df(self, info):
         dataf = pd.DataFrame(columns=['title', 'link', 'small_description', 'type', 'organize_date', 'register_deadline', 'max_paticipants', 'costs', 'paticipants_requirements', 'organizer', 'full_description'])
-        dataf['title'] = [x['title'] for x in info]
-        dataf['link'] = [x['link'] for x in info]
-        dataf['small_description'] = [x['small_description'] for x in info]
-        dataf['type'] = [x['type'] for x in info]
-        dataf['organize_date'] = [x['organize_date'] for x in info]
-        dataf['register_deadline'] = [x['register_deadline'] for x in info]
-        dataf['max_paticipants'] = [x['max_paticipants'] for x in info]
-        dataf['costs'] = [x['costs'] for x in info]
-        dataf['paticipants_requirements'] = [x['paticipants_requirements'] for x in info]
-        dataf['organizer'] = [x['organizer'] for x in info]
-        dataf['full_description'] = [x['full_description'] for x in info]
+        for x in info:
+            dataf = dataf.append(x, ignore_index=True)
         return dataf
     
     # fetch many pages at once
