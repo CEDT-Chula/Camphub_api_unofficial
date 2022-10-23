@@ -9,7 +9,7 @@ I don't have intention to make it a scraper for commercial purpose I just want t
 
 # Installation
 ```bash
-pip install camp-parser
+pip install camp_parser
 ```
 ```python
 from camp_parser import camphub_parser # or any thing thatREADME.rst we support
