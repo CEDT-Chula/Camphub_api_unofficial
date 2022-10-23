@@ -32,11 +32,14 @@ print(camp.info) #get the information
 
 ```python
 from camp_parser import camphub_parser # or any thing
-if __name__ == '__main__':
-    camp = camphub_parser('https://www.camphub.in.th/computer/') #page url
 
-    print(camp.page_fetching('https://www.camphub.in.th/computer/', pages = 50))
-    print(camp.page_fetching('https://www.camphub.in.th/computer/', pages = 50, workers = -1)) # Enable Multiprocessing
+camp = camphub_parser('https://www.camphub.in.th/computer/') # source page url default is None
+
+data = camp.page_fetching('https://www.camphub.in.th/computer/', pages = 50) # Fetch 50 pages without MultiThreading
+ndata = camp.page_fetching('https://www.camphub.in.th/computer/', pages = 50, workers = 8) # Enable Multiprocessing
+
+
+#wotkers depend on your CPU core
 ```
 
 ## Information structure
