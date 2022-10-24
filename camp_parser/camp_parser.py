@@ -9,11 +9,28 @@ class camphub_parser:
 
     def __init__(self, source=None):
         self.source = source
-        self.info = self.all_camp_info()
+        self.session = requests.Session()
+        if source is None:
+            self.info = "not available"
+        else:
+            self.info = self.all_camp_info()
         # request and pass the source to BeautifulSoup
 
     def get_soup(self, url):
-        r = requests.get(url)
+        # Debugging
+        # import logging
+
+        # import http.client
+        # http.client.HTTPConnection.debuglevel = 1
+
+        # # You must initialize logging, otherwise you'll not see debug output.
+        # logging.basicConfig()
+        # logging.getLogger().setLevel(logging.DEBUG)
+        # requests_log = logging.getLogger("requests.packages.urllib3")
+        # requests_log.setLevel(logging.DEBUG)
+        # requests_log.propagate = True
+        
+        r = self.session.get(url)
         soup = bs.BeautifulSoup(r.text, 'html.parser')
         return soup
 
@@ -73,6 +90,7 @@ class camphub_parser:
     
     # fetch many pages at once
     def page_fetching(self, source, pages, workers = 1):
+        print(f'Fetching {pages} pages...')
         dataframe = self.camp2df(self.all_camp_info(source))
         if workers != 1:
             index = [(source, i) for i in range(2, pages + 2)]
